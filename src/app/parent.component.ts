@@ -23,9 +23,10 @@ export class ParentComponent implements AfterViewInit {
 
     // Define the component using Component decorator.
     const component = Component({
-      template: '<div>This is the dynamic template</div>',
+      template: '<div>This is the dynamic template. Test value: {{test}}</div>',
       styles: [':host {color: red}']
     })(class {
+      test = 'some value';
     });
 
     // Define the module using NgModule decorator.
@@ -41,6 +42,8 @@ export class ParentComponent implements AfterViewInit {
         const componentFactory = factories.componentFactories[0];
         // Create the component and add to the view.
         const componentRef = this.container.createComponent(componentFactory);
+        // Modifying the property and triggering change detection.
+        setTimeout(() => componentRef.instance.test = 'some other value', 2000);
       });
   }
 }
